@@ -90,29 +90,105 @@ function handleClick(event) {
   }
 }
 
+//don't think i have this quite right
+
+function getRandomProduct() {
+  const unavailableProducts = [leftProduct, centerProduct, rightProduct];
+  
+  while(unavailableProducts.includes(leftProduct)) {
+    let leftProduct = Math.floor(Math.random() * Product.allProducts.length);
+    leftProduct = Product.allProducts[leftProduct];
+  }
+  unavailableProducts.push(leftProduct);
+
+  while(unavailableProducts.includes(centerProduct)) {
+    let centerProduct = Math.floor(Math.random() * Product.allProducts.length);
+    centerProduct = Product.allProducts[centerProduct];
+  }
+  unavailableProducts.push(centerProduct);
+
+  while(unavailableItems.includes(rightProduct)) {
+    let rightProduct = Math.floor(Math.random() * Product.allProducts.length);
+    rightProduct = Product.allProducts[rightProduct];
+  }
+  unavailableProducts.push(rightProduct);
+  renderAllItems();
+}
+
 //listeners
 productSectionElement.addEventListener('click', handleClick);
 
 
 //call functions
 makeNewProduct('Bag2D2', './img/bag.jpg');
-makeNewProduct('Banana Slicer', './img/banana.jpg');
-makeNewProduct('Bathroom Media', './img/bathroom.jpg');
+makeNewProduct('BananaSlicer', './img/banana.jpg');
+makeNewProduct('BathroomMedia', './img/bathroom.jpg');
 makeNewProduct('Bootles', './img/boots.jpg');
 makeNewProduct('Breakfast3000', './img/breakfast.jpg');
-makeNewProduct('BubbleMeat Gum', './img/bubblegum.jpg');
+makeNewProduct('BubbleMeatGum', './img/bubblegum.jpg');
 makeNewProduct('Chairwow', './img/chair.jpg');
-makeNewProduct('Cthulhu Figure', './img/cthulhu.jpg');
-makeNewProduct('Doggie Duck Lips', './img/dog-duck.jpg');
-makeNewProduct('Dragon Meat', './img/dragon.jpg');
+makeNewProduct('CthulhuFigure', './img/cthulhu.jpg');
+makeNewProduct('DoggieDuckLips', './img/dog-duck.jpg');
+makeNewProduct('DragonMeat', './img/dragon.jpg');
 makeNewProduct('Pentensils', './img/pen.jpg');
 makeNewProduct('Pwiffer', './img/pet-sweep.jpg');
 makeNewProduct('Pizzers', './img/scissors.jpg');
 makeNewProduct('SharkBagO', './img/shark.jpg');
 makeNewProduct('Swonsie', './img/sweep.png');
-makeNewProduct('Tauntaun Bag', './img/tauntaun.jpg');
+makeNewProduct('TauntaunBag', './img/tauntaun.jpg');
 makeNewProduct('Unicorn Meat', './img/unicorn.jpg');
 makeNewProduct('Watering Can', './img/water-can.jpg');
 makeNewProduct('Wine Glass', './img/wine-glass.jpg');
 
 renderThreeProducts();
+renderChart();
+
+
+
+// chart - first attempt, using sara's color scheme until i can play with my own
+
+function renderChart() {
+  const itemData = [];
+  const itemLabels = [];
+
+  for (let item of Item.allItems) {
+    itemData.push(item.votes);
+    itemLabels.push(item.name);
+  }
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: itemLabels,
+        datasets: [{
+            label: 'Tallied Results',
+            data: itemData,
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+}
