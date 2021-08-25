@@ -112,3 +112,7 @@ ul li {
 #main-text {
   color: black;
 } */
+
+.productImg{
+  max-width: 250px;
+}
