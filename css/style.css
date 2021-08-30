@@ -1,7 +1,7 @@
-#leftImg, #middleImg, #rightImg  {
-    max-height: 150px;
-    border-radius: 25%;
-    border: 3px solid #023047;
+#leftImg, #centerImg, #rightImg  {
+  max-height: 150px;
+  border-radius: 25%;
+  border: 3px solid #023047;
 }
 
   main {
@@ -17,7 +17,6 @@ body {
 
 header {
   height: 100px;
-  width:;
   background-color: #219EBC;
   margin-bottom: 100px;
 }
@@ -36,14 +35,14 @@ a {
   text-decoration: none;
 }
 
-#itemLikes, #busMallInfo h2 {
+#itemLikes, #busMallInfo h3 {
   font-size: x-large;
   font-weight: bold;
   padding-left: 75px;
   color: #023047
 }
 
-#clicksCounterUL {
+#votingUL {
   margin-left: 25px;
   margin-right: 50px;
   grid-column: 1 / 2;
@@ -53,15 +52,15 @@ a {
 
 }
 
-#clicksCounterUL li {
+#votingUL li {
   padding: 3px;
 }
 
-/* #clickSection div {
+#prodSection div {
   width: 250px;
-} */
+}
 
-#clickSection {
+#prodSection {
   display:flex;
   align-items: flex-end;
   justify-content: space-evenly;
@@ -70,7 +69,7 @@ a {
 
 }
 
-#clickSection h1{
+#prodSection h1{
   align-self: center;
   width: 75px;
 }
@@ -92,4 +91,7 @@ a {
   margin-left: 50px;
 }
 
+#allhail {
+  font-size: 72px;
+}
 

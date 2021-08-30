@@ -1,23 +1,24 @@
 'use strict';
+// console.log("why?")
 
-// ------------------------------- Global Variables ------------------------------//
-const ulElem = document.getElementById('clicksCounterUL');
-const clickSectionElem = document.getElementById('clickSection');
+// global variables
+const ulElem = document.getElementById('votingUL');
+const prodSectionElem = document.getElementById('prodSection');
 const buttonElem = document.getElementById('viewResults');
 
 
 const leftImgElem = document.getElementById('leftImg');
-const leftH2Elem = document.getElementById('leftH2');
+const leftH3Elem = document.getElementById('leftH3');
 
-const middleImgElem = document.getElementById('middleImg');
-const middleH2Elem = document.getElementById('middleH2');
+const centerImgElem = document.getElementById('centerImg');
+const centerH3Elem = document.getElementById('centerH3');
 
 const rightImgElem = document.getElementById('rightImg');
-const rightH2Elem = document.getElementById('rightH2');
+const rightH3Elem = document.getElementById('rightH3');
 
 
 let leftItem = null;
-let middleItem = null;
+let centerItem = null;
 let rightItem = null;
 
 let clickCounter = 0;
@@ -25,7 +26,8 @@ const roundsOfVoting = 25;
 
 
 
-// ------------------------------- Constructor Function------------------------------//
+// constructor
+
 function Item (name, imgPath) {
   this.name = name;
   this.imgPath = imgPath;
@@ -36,47 +38,48 @@ function Item (name, imgPath) {
 
 Item.allItems = [];
 
-// ------------------------------- Prototype ------------------------------//
-Item.prototype.renderItem = function (img, h2) {
+//prototype
+
+Item.prototype.renderItem = function (img, H3) {
   img.src = this.imgPath;
-  h2.textContent = this.name;
+  H3.textContent = this.name;
 }
 
 Item.prototype.getLikesPercentage = function () {
   this.likesPercentage = Number(this.likes / this.views * 100).toFixed(2);
 }
 
-// ------------------------------- Global Functions ------------------------------//
+// global functions
 
 function getThreeItems() {
-  const currentItems = [leftItem, middleItem, rightItem];
+  const currentItems = [leftItem, centerItem, rightItem];
   while (currentItems.includes(leftItem)){
-    let leftItemIndex = Math.floor(Math.random() * Item.allItems.length);
-    leftItem = Item.allItems[leftItemIndex];
+    let leftItemChoice = Math.floor(Math.random() * Item.allItems.length);
+    leftItem = Item.allItems[leftItemChoice];
   }
   currentItems.push(leftItem);
 
-  while (currentItems.includes(middleItem)){
-    let middleItemIndex = Math.floor(Math.random() * Item.allItems.length);
-    middleItem = Item.allItems[middleItemIndex];
+  while (currentItems.includes(centerItem)){
+    let centerItemChoice = Math.floor(Math.random() * Item.allItems.length);
+    centerItem = Item.allItems[centerItemChoice];
   }
-  currentItems.push(middleItem);
+  currentItems.push(centerItem);
 
   while (currentItems.includes(rightItem)){
-    let rightItemIndex = Math.floor(Math.random() * Item.allItems.length);
-    rightItem = Item.allItems[rightItemIndex];
+    let rightItemChoice = Math.floor(Math.random() * Item.allItems.length);
+    rightItem = Item.allItems[rightItemChoice];
   }
   currentItems.push(rightItem);
 
   leftItem.views++;
-  middleItem.views++;
+  centerItem.views++;
   rightItem.views++;
 }
 
 function renderNewItems() {
-  leftItem.renderItem(leftImgElem, leftH2Elem);
-  middleItem.renderItem(middleImgElem, middleH2Elem);
-  rightItem.renderItem(rightImgElem, rightH2Elem);
+  leftItem.renderItem(leftImgElem, leftH3Elem);
+  centerItem.renderItem(centerImgElem, centerH3Elem);
+  rightItem.renderItem(rightImgElem, rightH3Elem);
 }
 
 function renderResults() {
@@ -105,7 +108,7 @@ function handleButtonClick(){
 
 // event listener
 
-clickSectionElem.addEventListener('click', handleClick);
+prodSectionElem.addEventListener('click', handleClick);
 buttonElem.addEventListener('click', handleButtonClick);
 
 //calling functions
@@ -123,7 +126,6 @@ function renderChart(){
   let myViewsArr = [];
   let myLikesArr = [];
   let myLikesPercentageArr = [];
-  let myColorArr = [];
 
   for(let item of Item.allItems){
     myItemNameArr.push(item.name);
@@ -140,29 +142,29 @@ function renderChart(){
           id: 'views',
           label: 'Views',
           data: myViewsArr,
-          backgroundColor: 'blue',
-          borderColor: 'black',
+          backgroundColor: 'yellow',
+          borderColor: 'grey',
           borderWidth: 2
         },{
         id: 'likes',
         label: 'Likes',
         data: myLikesArr,
         backgroundColor: 'red',
-        borderColor: 'black',
+        borderColor: 'grey',
         borderWidth: 2
       },{
         id: 'percentage',
         label: 'Percentage',
         data: myLikesPercentageArr,
-        backgroundColor: 'yellow',
-        borderColor: 'black',
+        backgroundColor: 'blue',
+        borderColor: 'grey',
         borderWidth: 2
       }]
     },
     options: {      
       plugins: {
         title: {
-          text: 'Item Views and Likes',
+          text: 'Voting Results',
           display: true,
           font: {
             size: 20
@@ -189,25 +191,25 @@ function renderChart(){
 function handleClick(e) {
   let imageClicked = e.target.id;
   console.log(imageClicked);
-  if (imageClicked === 'leftImg' || imageClicked === 'middleImg' || imageClicked === 'rightImg') {
+  if (imageClicked === 'leftImg' || imageClicked === 'centerImg' || imageClicked === 'rightImg') {
     clickCounter++;
       if (imageClicked === 'leftImg') {
       leftItem.likes++;
-    } if (imageClicked === 'middleImg') {
-      middleItem.likes++;
+    } if (imageClicked === 'centerImg') {
+      centerItem.likes++;
     } if (imageClicked === 'rightImg') {
       rightItem.likes++;
     } if (clickCounter === roundsOfVoting) {
-    alert('Thanks for your insight!');
+    alert('Thank you for voting! All hail Bus Mall.');
     buttonElem.style.display = 'block';
-    clickSectionElem.removeEventListener('click', handleClick);
+    prodSectionElem.removeEventListener('click', handleClick);
     renderResults();
     } else {
     getThreeItems();
     renderNewItems();
     }
   } else {
-    alert('That was not a valid selection.');
+    alert('Please select an option. All hail Bus Mall.');
   }
   
 }
@@ -227,25 +229,25 @@ function getFromStorage() {
     }
     renderResults();
   } else {
-      Item.allItems.push(new Item('Star Wars Bag', './img/bag.jpg'));
-      Item.allItems.push(new Item('Banana Cutter', './img/banana.jpg'));
-      Item.allItems.push(new Item('iPad Toilet Paper Stand', './img/bathroom.jpg'));
-      Item.allItems.push(new Item('Toeless Galoshes', './img/boots.jpg'));
-      Item.allItems.push(new Item('All-in-One Breakfast Maker', './img/breakfast.jpg'));
-      Item.allItems.push(new Item('Meatball Bubblegum', './img/bubblegum.jpg'));
-      Item.allItems.push(new Item('Inverted Chair', './img/chair.jpg'));
-      Item.allItems.push(new Item('Cthulhu Action Figure', './img/cthulhu.jpg'));
-      Item.allItems.push(new Item('Dog Duck Bill', './img/dog-duck.jpg'));
+      Item.allItems.push(new Item('Bag2D2', './img/bag.jpg'));
+      Item.allItems.push(new Item('Banana Slicer', './img/banana.jpg'));
+      Item.allItems.push(new Item('Bathroom Media', './img/bathroom.jpg'));
+      Item.allItems.push(new Item('Bootdles', './img/boots.jpg'));
+      Item.allItems.push(new Item('Breakfast2020', './img/breakfast.jpg'));
+      Item.allItems.push(new Item('BubbleMeat Gum', './img/bubblegum.jpg'));
+      Item.allItems.push(new Item('Chair?', './img/chair.jpg'));
+      Item.allItems.push(new Item('Cthulhu Figure', './img/cthulhu.jpg'));
+      Item.allItems.push(new Item('Doggie Duck Lips', './img/dog-duck.jpg'));
       Item.allItems.push(new Item('Dragon Meat', './img/dragon.jpg'));
-      Item.allItems.push(new Item('Pen Utensil Attachments', './img/pen.jpg'));
-      Item.allItems.push(new Item('Microfiber Cleaning Pet Shoes', './img/pet-sweep.jpg'));
-      Item.allItems.push(new Item('2-in-1 Scissors', './img/scissors.jpg'));
-      Item.allItems.push(new Item('Suede Shark Sleeping Bag', './img/shark.jpg'));
-      Item.allItems.push(new Item('Microfiber Cleaning Baby Onesie', './img/sweep.png'));
-      Item.allItems.push(new Item('Star Wars Tauntaun Sleeping Bag', './img/tauntaun.jpg'));
+      Item.allItems.push(new Item('Pentensil', './img/pen.jpg'));
+      Item.allItems.push(new Item('Pwiffer Shoes', './img/pet-sweep.jpg'));
+      Item.allItems.push(new Item('Pizzers', './img/scissors.jpg'));
+      Item.allItems.push(new Item('SharkBagO', './img/shark.jpg'));
+      Item.allItems.push(new Item('Swonsie', './img/sweep.png'));
+      Item.allItems.push(new Item('Tauntaun Sleeper', './img/tauntaun.jpg'));
       Item.allItems.push(new Item('Unicorn Meat', './img/unicorn.jpg'));
-      Item.allItems.push(new Item('Reverse Watering Can', './img/water-can.jpg'));
-      Item.allItems.push(new Item('Classy Wine Glass', './img/wine-glass.jpg'));
+      Item.allItems.push(new Item('Watering Cant', './img/water-can.jpg'));
+      Item.allItems.push(new Item('Wine-Oh! Glass', './img/wine-glass.jpg'));
   }
 }
 

@@ -7,6 +7,7 @@
 </head>
 <body>
   <header> 
+    <img src="img/buslogo.png" id="buslogo" alt="bus logo">
     <nav> 
       <ul>
         <li><a href="#">Home</a></li>        
@@ -16,15 +17,15 @@
     </nav>
   </header>
   <main>
-    <section>
-      <h2 id= "itemLikes">Item Likes</h2>
-      <ul id="clicksCounterUL">
+    <aside>
+      <h3 id= "itemLikes">Item Likes</h3>
+      <ul id="votingUL">
         <li>Bag2D2: 0</li>
         <li>Banana Slicer: 0</li>
         <li>Bathroom Media: 0</li>
         <li>Bootdles: 0</li>
         <li>Breakfast2020: 0</li>
-        <li>BubbleMeat Gum: 0</li>
+         <li>BubbleMeat Gum: 0</li>
         <li>Chair?: 0</li>
         <li>Cthulhu Figure : 0</li>
         <li>Doggie Duck Lips: 0</li>
@@ -39,38 +40,36 @@
         <li>Watering Can't: 0</li>
         <li>Wine-Oh! Glasses: 0</li>
       </ul>
-    </section>
-    <section id="clickSection">    
+    </aside>
+    <section id="prodSection">    
       <div class="productchoices"> 
         <img id="leftImg" class="small" src="./img/banana.jpg">
-        <h2 id="leftH2">Banana Slicer</h2>
+        <h3 id="leftH3">Banana Slicer</h3>
       </div>
       <div class="productchoices"> 
-        <img id="middleImg" class="small" src="./img/dog-duck.jpg">
-        <h2 id="middleH2">Doggie Duck Lips</h2>
+        <img id="centerImg" class="small" src="./img/dog-duck.jpg">
+        <h3 id="centerH3">Doggie Duck Lips</h3>
       </div>
       <div class="productchoices">
         <img id="rightImg" class="small" src="./img/pen.jpg">
-        <h2 id="rightH2">Pentensils</h2>
+        <h3 id="rightH3">Pentensils</h3>
       </div>
       <button id='viewResults' type="button">View Results</button>
     </section>
     <figure id="chartFig">
       <canvas id="chart"></canvas>
     </figure>
-    <aside id = "busMallInfo">
-      <h2>Welcome to Bus Mall! </h2>
+    <article id = "busMallInfo">
+      <h3>Welcome to Bus Mall! </h3>
       <p> Thank you for your interest in Bus Mall! Please know that your involuntary participation is apprecated. Once your results have been tallied, the vans outside your family home will be called away, your children will be safe, and you may return to your life as normal. Please be sure to smile as you vote to assure our monitors that you are in compliance with our ideals. 
       </p>
       <p>Bus Mall Corporation will not harm you.</p>
+      <br>
       <p>Bus Mall Corp is your friend.</p>
-      <p>All hail Bus Mall.</p>
-    </aside>
+      <br>
+      <p id="allhail">All hail Bus Mall.</p>
+    </article>
   </main>
-  <footer>
-    <div>
-    </div>
-  </footer>
   <script type = 'text/javascript' src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.min.js"></script>
   <script src="app.js"></script>
 </body>
