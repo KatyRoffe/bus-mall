@@ -1,45 +1,78 @@
 <!DOCTYPE html>
-  <html>
-    <head>
-      <title>Bus Mall</title>
-      <link rel="stylesheet" href="/reset.css">
-      <link rel="stylesheet" href="/style.css">
-    </head>
-    <body>
-      <header>
-        <div>
-          <img id="logo" src="">
-          <h1>Bus Mall Market Research</h1>
-        </div>
-        <nav>
-          <ul>
-            <!-- <li><a href="">Thing</a></li>
-            <li><a href="">Thing</a></li> -->
-          </ul>
-        </nav>
-      </header>
-      <main>
-        <div id="upper">
-          <aside id="voting" class="hide">
-            <h2>Results</h2>
-            <ul id="results">
-              <li></li>
-            </ul>
-          </aside>
-          <div>
-            <article id="productvoting">
-              <section id="products">
-                <img class="productImg" id="leftImg">
-                <img class="productImg" id="centerImg">
-                <img class="productImg" id="rightImg">
-              </section>
-              <section id="message"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sit amet justo donec enim diam vulputate ut pharetra sit. At in tellus integer feugiat. Lectus quam id leo in. Tellus id interdum velit laoreet id donec ultrices tincidunt. Enim tortor at auctor urna. Odio eu feugiat pretium nibh. Aliquam ultrices sagittis orci a scelerisque purus. In massa tempor nec feugiat nisl pretium fusce id. Sed elementum tempus egestas sed sed. Ullamcorper dignissim cras tincidunt lobortis feugiat vivamus at augue eget. Porta nibh venenatis cras sed felis eget velit. Tincidunt augue interdum velit euismod in pellentesque massa placerat. Nisl vel pretium lectus quam id. Sit amet nisl purus in mollis nunc sed id. A iaculis at erat pellentesque adipiscing commodo. Nibh venenatis cras sed felis eget velit aliquet sagittis id. Pretium quam vulputate dignissim suspendisse in est ante. Nulla at volutpat diam ut venenatis tellus in. Amet consectetur adipiscing elit pellentesque habitant.</p>
-              </section>
-            </article>
-          </div>
-        </div>
-        <script src="./app.js"></script>
-      </main>
-      <footer><p>Thank you for visiting Bus Mall. Do not approach the dog park. </p></footer>
-    </body>
-  </html>
+<html lang="en">
+<head>
+  <title>BusMall</title>
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <header> 
+    <nav> 
+      <ul>
+        <li><a href="#">Home</a></li>        
+        <li><a href="#">Shop</a></li>
+        <li><a href="#">About</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section>
+      <h2 id= "itemLikes">Item Likes</h2>
+      <ul id="clicksCounterUL">
+        <li>Star Wars Bag : 0</li>
+        <li>Banana Cutter : 0</li>
+        <li>iPad Toilet Paper Stand : 0</li>
+        <li>Toeless Galoshes : 0</li>
+        <li>All-in-One Breakfast Maker : 0</li>
+        <li>Meatball Bubblegum : 0</li>
+        <li>Inverted Chair : 0</li>
+        <li>Cthulhu Action Figure : 0</li>
+        <li>Dog Duck Bill : 0</li>
+        <li>Dragon Meat : 0</li>
+        <li>Pen Utensil Attachments : 0</li>
+        <li>Microfiber Cleaning Pet Shoes : 0</li>
+        <li>2-in-1 Scissors : 0</li>
+        <li>Suede Shark Sleeping Bag : 0</li>
+        <li>Microfiber Cleaning Baby Onesie : 0</li>
+        <li>Star Wars Tauntaun Sleeping Bag : 0</li>
+        <li>Unicorn Meat : 0</li>
+        <li>Reverse Watering Can : 0</li>
+        <li>Classy Wine Glass : 0</li>
+      </ul>
+    </section>
+    <section id="clickSection">    
+      <div class="productchoices"> 
+        <img id="leftImg" class="small" src="./img/banana.jpg">
+        <h2 id="leftH2">Banana Cutter</h2>
+      </div>
+      <div class="productchoices"> 
+        <img id="middleImg" class="small" src="./img/dog-duck.jpg">
+        <h2 id="middleH2">Dog Duck Bill</h2>
+      </div>
+      <div class="productchoices">
+        <img id="rightImg" class="small" src="./img/pen.jpg">
+        <h2 id="rightH2">Pen Utensil Attachments</h2>
+      </div>
+      <button id='viewResults' type="button">View Results</button>
+    </section>
+    <figure id="chartFig">
+      <canvas id="chart"></canvas>
+    </figure>
+    <aside id = "busMallInfo">
+      <h2>Welcome to Bus Mall! </h2>
+      <p> Thank you for your interest in Bus Mall! Please know that your involuntary participation is apprecated. Once your results have been tallied, the vans outside your family home will be called away, your children will be safe, and you may return to your life as normal. Please be sure to smile as you vote to assure our monitors that you are in compliance with our ideals. 
+      </p>
+      <p>Bus Mall Corp will not harm you.</p>
+      <p>Bus Mall Corp is your friend.</p>
+      <p>All hail Bus Mall Corp.</p>
+    </aside>
+  </main>
+  <footer>
+    <div>
+      <p>BusMall Contact Info</p>
+    </div>
+  </footer>
+  <script type = 'text/javascript' src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
