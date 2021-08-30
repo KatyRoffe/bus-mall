@@ -1,194 +1,255 @@
 'use strict';
 
-// console.log('AHHHHHHHH!');
+// ------------------------------- Global Variables ------------------------------//
+const ulElem = document.getElementById('clicksCounterUL');
+const clickSectionElem = document.getElementById('clickSection');
+const buttonElem = document.getElementById('viewResults');
 
 
-// global variables
+const leftImgElem = document.getElementById('leftImg');
+const leftH2Elem = document.getElementById('leftH2');
 
-const leftImageElement = document.getElementById('leftImg');
-const centerImageElement = document.getElementById('centerImg');
-const rightImageElement = document.getElementById('rightImg');
-const productSectionElement = document.getElementById('products');
+const middleImgElem = document.getElementById('middleImg');
+const middleH2Elem = document.getElementById('middleH2');
 
-let leftProduct = null;
-let rightProduct = null;
-let centerProduct = null;
+const rightImgElem = document.getElementById('rightImg');
+const rightH2Elem = document.getElementById('rightH2');
 
-let rounds = 25;
 
-// constructor function
+let leftItem = null;
+let middleItem = null;
+let rightItem = null;
 
-function Product(name, image) {
+let clickCounter = 0;
+const roundsOfVoting = 25;
+
+
+
+// ------------------------------- Constructor Function------------------------------//
+function Item (name, imgPath) {
   this.name = name;
-  this.image = image;
-  this.timesShown = 0;
-  this.timesClicked = 0;
+  this.imgPath = imgPath;
+  this.views = 0;
+  this.likes = 0;
+  this.likesPercentage = 0;
 }
 
-// protoype
-Product.allProducts = [];
-Product.prototype.renderOneProduct = function(imageElement) {
-  imageElement.src = this.image;
-  this.timesShown++;
+Item.allItems = [];
+
+// ------------------------------- Prototype ------------------------------//
+Item.prototype.renderItem = function (img, h2) {
+  img.src = this.imgPath;
+  h2.textContent = this.name;
 }
 
-// functions
-function makeNewProduct(name, image) {
-  Product.allProducts.push(new Product(name, image));
+Item.prototype.getLikesPercentage = function () {
+  this.likesPercentage = Number(this.likes / this.views * 100).toFixed(2);
 }
 
-function renderThreeProducts() {
-  const leftChoice = Math.floor(Math.random() * Product.allProducts.length);
-  leftProduct = Product.allProducts[leftChoice];
+// ------------------------------- Global Functions ------------------------------//
 
-  while (!rightProduct || rightProduct === leftProduct) {
-    const rightChoice = Math.floor(Math.random() * Product.allProducts.length);
-    rightProduct = Product.allProducts[rightChoice];
+function getThreeItems() {
+  const currentItems = [leftItem, middleItem, rightItem];
+  while (currentItems.includes(leftItem)){
+    let leftItemIndex = Math.floor(Math.random() * Item.allItems.length);
+    leftItem = Item.allItems[leftItemIndex];
   }
+  currentItems.push(leftItem);
 
-  while (!centerProduct || centerProduct === leftProduct || centerProduct === rightProduct) {
-    const centerChoice = Math.floor(Math.random() * Product.allProducts.length);
-    centerProduct = Product.allProducts[centerChoice];
+  while (currentItems.includes(middleItem)){
+    let middleItemIndex = Math.floor(Math.random() * Item.allItems.length);
+    middleItem = Item.allItems[middleItemIndex];
   }
+  currentItems.push(middleItem);
 
-  leftProduct.renderOneProduct(leftImageElement);
-  rightProduct.renderOneProduct(rightImageElement);
-  centerProduct.renderOneProduct(centerImageElement);
+  while (currentItems.includes(rightItem)){
+    let rightItemIndex = Math.floor(Math.random() * Item.allItems.length);
+    rightItem = Item.allItems[rightItemIndex];
+  }
+  currentItems.push(rightItem);
 
+  leftItem.views++;
+  middleItem.views++;
+  rightItem.views++;
+}
+
+function renderNewItems() {
+  leftItem.renderItem(leftImgElem, leftH2Elem);
+  middleItem.renderItem(middleImgElem, middleH2Elem);
+  rightItem.renderItem(rightImgElem, rightH2Elem);
 }
 
 function renderResults() {
-  const resultsElement = document.getElementById('results');
-  resultsElement.innerHTML = '';
-  for (let product of Product.allProducts) {
-    const liElement = document.createElement('li');
-    liElement.textContent = `${product.name} was shown ${product.timesShown} times and was clicked ${product.timesClicked} times.`;
-    resultsElement.appendChild(liElement);
-  }
-}
-
-
-function handleClick(event) {
-  console.log(event.target);
-  const validTargets = [leftImageElement, rightImageElement, centerImageElement];
-  if (validTargets.includes(event.target)) {
-    rounds--;
-    if (event.target === validTargets[0]) {
-      validTargets[0].timesClicked++;
-    } else if (event.target === validTargets[1]) {
-      validTargets[1].timesClicked++;
-    } else {
-      validTargets[2].timesClicked++;
-    }
-    if (rounds === 0) {
-      productSectionElement.removeEventListener('click', handleClick);
-      alert('Thank you for voting!');
-      renderResults();
-    } else {
-      renderThreeProducts();
-    }
-  }
-}
-
-//don't think i have this quite right
-
-function getRandomProduct() {
-  const unavailableProducts = [leftProduct, centerProduct, rightProduct];
-  
-  while(unavailableProducts.includes(leftProduct)) {
-    let leftProduct = Math.floor(Math.random() * Product.allProducts.length);
-    leftProduct = Product.allProducts[leftProduct];
-  }
-  unavailableProducts.push(leftProduct);
-
-  while(unavailableProducts.includes(centerProduct)) {
-    let centerProduct = Math.floor(Math.random() * Product.allProducts.length);
-    centerProduct = Product.allProducts[centerProduct];
-  }
-  unavailableProducts.push(centerProduct);
-
-  while(unavailableItems.includes(rightProduct)) {
-    let rightProduct = Math.floor(Math.random() * Product.allProducts.length);
-    rightProduct = Product.allProducts[rightProduct];
-  }
-  unavailableProducts.push(rightProduct);
-  renderAllItems();
-}
-
-//listeners
-productSectionElement.addEventListener('click', handleClick);
-
-
-//call functions
-makeNewProduct('Bag2D2', './img/bag.jpg');
-makeNewProduct('BananaSlicer', './img/banana.jpg');
-makeNewProduct('BathroomMedia', './img/bathroom.jpg');
-makeNewProduct('Bootles', './img/boots.jpg');
-makeNewProduct('Breakfast3000', './img/breakfast.jpg');
-makeNewProduct('BubbleMeatGum', './img/bubblegum.jpg');
-makeNewProduct('Chairwow', './img/chair.jpg');
-makeNewProduct('CthulhuFigure', './img/cthulhu.jpg');
-makeNewProduct('DoggieDuckLips', './img/dog-duck.jpg');
-makeNewProduct('DragonMeat', './img/dragon.jpg');
-makeNewProduct('Pentensils', './img/pen.jpg');
-makeNewProduct('Pwiffer', './img/pet-sweep.jpg');
-makeNewProduct('Pizzers', './img/scissors.jpg');
-makeNewProduct('SharkBagO', './img/shark.jpg');
-makeNewProduct('Swonsie', './img/sweep.png');
-makeNewProduct('TauntaunBag', './img/tauntaun.jpg');
-makeNewProduct('Unicorn Meat', './img/unicorn.jpg');
-makeNewProduct('Watering Can', './img/water-can.jpg');
-makeNewProduct('Wine Glass', './img/wine-glass.jpg');
-
-renderThreeProducts();
-renderChart();
-
-
-
-// chart - first attempt, using sara's color scheme until i can play with my own
-
-function renderChart() {
-  const itemData = [];
-  const itemLabels = [];
-
+  ulElem.textContent = '';
   for (let item of Item.allItems) {
-    itemData.push(item.votes);
-    itemLabels.push(item.name);
+    console.log(item);
+    let liElem = document.createElement('li');
+    if (item.views === 0) {
+      liElem.textContent = `${item.name} was not viewed.`;
+      ulElem.appendChild(liElem);
+    }
+    else {
+      item.getLikesPercentage();
+      liElem.textContent = `${item.name}: ${item.likes} likes`;
+      ulElem.appendChild(liElem);
+    }
+  }
+}
+
+
+function handleButtonClick(){
+  renderChart();
+  putInStorage();
+  buttonElem.removeEventListener('click', handleButtonClick);
+}
+
+// event listener
+
+clickSectionElem.addEventListener('click', handleClick);
+buttonElem.addEventListener('click', handleButtonClick);
+
+//calling functions
+
+getFromStorage();
+getThreeItems();
+renderNewItems();
+
+
+//chart
+
+function renderChart(){
+  const ctx = document.getElementById('chart').getContext('2d');
+  let myItemNameArr = [];
+  let myViewsArr = [];
+  let myLikesArr = [];
+  let myLikesPercentageArr = [];
+  let myColorArr = [];
+
+  for(let item of Item.allItems){
+    myItemNameArr.push(item.name);
+    myViewsArr.push(item.views);
+    myLikesArr.push(item.likes);
+    myLikesPercentageArr.push(item.likesPercentage);
   }
 
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
+  var itemsChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: itemLabels,
-        datasets: [{
-            label: 'Tallied Results',
-            data: itemData,
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                  'rgba(75, 192, 192, 1)',
-                  'rgba(153, 102, 255, 1)',
-                  'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
+      labels: myItemNameArr,
+      datasets: [{
+          id: 'views',
+          label: 'Views',
+          data: myViewsArr,
+          backgroundColor: 'blue',
+          borderColor: 'black',
+          borderWidth: 2
+        },{
+        id: 'likes',
+        label: 'Likes',
+        data: myLikesArr,
+        backgroundColor: 'red',
+        borderColor: 'black',
+        borderWidth: 2
+      },{
+        id: 'percentage',
+        label: 'Percentage',
+        data: myLikesPercentageArr,
+        backgroundColor: 'yellow',
+        borderColor: 'black',
+        borderWidth: 2
+      }]
     },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
+    options: {      
+      plugins: {
+        title: {
+          text: 'Item Views and Likes',
+          display: true,
+          font: {
+            size: 20
+          },
+          padding: 15
+        },
+        legend: {
+          position: 'bottom'
+        }},
+      layout: {
+        padding: {
+          top: 50
         }
+      },
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
     }
-});
+  });
+}
+
+function handleClick(e) {
+  let imageClicked = e.target.id;
+  console.log(imageClicked);
+  if (imageClicked === 'leftImg' || imageClicked === 'middleImg' || imageClicked === 'rightImg') {
+    clickCounter++;
+      if (imageClicked === 'leftImg') {
+      leftItem.likes++;
+    } if (imageClicked === 'middleImg') {
+      middleItem.likes++;
+    } if (imageClicked === 'rightImg') {
+      rightItem.likes++;
+    } if (clickCounter === roundsOfVoting) {
+    alert('Thanks for your insight!');
+    buttonElem.style.display = 'block';
+    clickSectionElem.removeEventListener('click', handleClick);
+    renderResults();
+    } else {
+    getThreeItems();
+    renderNewItems();
+    }
+  } else {
+    alert('That was not a valid selection.');
+  }
+  
+}
+
+
+//storage
+function getFromStorage() {
+  let storedItems = localStorage.getItem('items');
+  if (storedItems) {
+    let parsedItems = JSON.parse(storedItems);
+    console.log(parsedItems);
+    for (let item of parsedItems) {
+      let newItem = new Item(item.name, item.imgPath)
+      newItem.views = item.views;
+      newItem.likes = item.likes;
+      Item.allItems.push(newItem);
+    }
+    renderResults();
+  } else {
+      Item.allItems.push(new Item('Star Wars Bag', './img/bag.jpg'));
+      Item.allItems.push(new Item('Banana Cutter', './img/banana.jpg'));
+      Item.allItems.push(new Item('iPad Toilet Paper Stand', './img/bathroom.jpg'));
+      Item.allItems.push(new Item('Toeless Galoshes', './img/boots.jpg'));
+      Item.allItems.push(new Item('All-in-One Breakfast Maker', './img/breakfast.jpg'));
+      Item.allItems.push(new Item('Meatball Bubblegum', './img/bubblegum.jpg'));
+      Item.allItems.push(new Item('Inverted Chair', './img/chair.jpg'));
+      Item.allItems.push(new Item('Cthulhu Action Figure', './img/cthulhu.jpg'));
+      Item.allItems.push(new Item('Dog Duck Bill', './img/dog-duck.jpg'));
+      Item.allItems.push(new Item('Dragon Meat', './img/dragon.jpg'));
+      Item.allItems.push(new Item('Pen Utensil Attachments', './img/pen.jpg'));
+      Item.allItems.push(new Item('Microfiber Cleaning Pet Shoes', './img/pet-sweep.jpg'));
+      Item.allItems.push(new Item('2-in-1 Scissors', './img/scissors.jpg'));
+      Item.allItems.push(new Item('Suede Shark Sleeping Bag', './img/shark.jpg'));
+      Item.allItems.push(new Item('Microfiber Cleaning Baby Onesie', './img/sweep.png'));
+      Item.allItems.push(new Item('Star Wars Tauntaun Sleeping Bag', './img/tauntaun.jpg'));
+      Item.allItems.push(new Item('Unicorn Meat', './img/unicorn.jpg'));
+      Item.allItems.push(new Item('Reverse Watering Can', './img/water-can.jpg'));
+      Item.allItems.push(new Item('Classy Wine Glass', './img/wine-glass.jpg'));
+  }
+}
+
+function putInStorage() {
+  let preppedItems = JSON.stringify(Item.allItems);
+  localStorage.setItem('items', preppedItems);
 }
